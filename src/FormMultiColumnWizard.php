@@ -16,7 +16,6 @@ namespace Richardhj\Contao;
 use Contao\Controller;
 use Contao\Environment;
 use Contao\Widget;
-use MultiColumnWizard;
 
 
 /**
@@ -24,7 +23,7 @@ use MultiColumnWizard;
  *
  * @package Richardhj\Contao
  */
-class FormMultiColumnWizard extends MultiColumnWizard
+class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard
 {
 
     /**
@@ -52,8 +51,98 @@ class FormMultiColumnWizard extends MultiColumnWizard
     {
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         Widget::__construct($arrAttributes);
+
+        $this->eventDispatcher = \System::getContainer()->get('event_dispatcher');
     }
 
+    public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
+    {
+        $return = parent::generate($overwriteRowCurrentRow, $onlyRows);
+
+        unset($GLOBALS['TL_JAVASCRIPT']['mcw'], $GLOBALS['TL_CSS']['mcw']);
+
+        $GLOBALS['TL_JQUERY'][] = <<<'HTML'
+<script>
+    $(function () {
+        $(document).on('click', 'table.multicolumnwizard a[data-operations="new"]', function (event) {
+            event.preventDefault();
+
+            var clonedRow = $(this).closest('tr').clone();
+            clonedRow.find('input').val('');
+            $(this).closest('tr').after(clonedRow);
+
+            updateMcwInputs($(this).closest('table'));
+        });
+
+        $(document).on('click', 'table.multicolumnwizard a[data-operations="up"]', function (event) {
+            event.preventDefault();
+            var row = $(this).parents('tr:first');
+            row.insertBefore(row.prev());
+
+            updateMcwInputs($(this).closest('table'));
+        });
+
+        $(document).on('click', 'table.multicolumnwizard a[data-operations="down"]', function (event) {
+            event.preventDefault();
+            var row = $(this).parents('tr:first');
+            row.insertAfter(row.prev());
+
+            updateMcwInputs($(this).closest('table'));
+        });
+
+        $(document).on('click', 'table.multicolumnwizard a[data-operations="delete"]', function (event) {
+            event.preventDefault();
+            $(this).closest('tr').remove();
+
+            updateMcwInputs($(this).closest('table'));
+        });
+
+        function updateMcwInputs($table) {
+            $table.find('tr[data-rowid]').each(function (index) {
+                $(this).attr('data-rowid', index);
+
+                $(this).find('label[for]').each(function () {
+                    $(this).attr('for', $(this).attr('for').replace(/(.+?)(\[\d])(\[.+?])/, '$1[' + index + ']$3'))
+                });
+
+                $(this).find('*[name][id]').each(function () {
+                    var name = $(this).attr('name').replace(/(.+?)(\[\d])(\[.+?])/, '$1[' + index + ']$3');
+                    $(this).attr('name', name);
+                    $(this).attr('id', 'ctrl_' + name);
+                });
+            });
+        }
+
+    }(jQuery));
+</script>
+HTML;
+
+        return $return;
+    }
+
+    protected function generateTable(
+        $arrUnique,
+        $arrDatepicker,
+        $arrColorpicker,
+        $strHidden,
+        $arrItems,
+        $arrHiddenHeader = array(),
+        $onlyRows = false
+    ) {
+        $return = parent::generateTable(
+            $arrUnique,
+            $arrDatepicker,
+            $arrColorpicker,
+            $strHidden,
+            $arrItems,
+            $arrHiddenHeader,
+            $onlyRows
+        );
+
+        $return = preg_replace('/<script(.*?)>([\s\S]*?)<\/script>/im', '', $return);
+
+        return $return;
+    }
 
     /**
      * Generate button string
@@ -110,17 +199,18 @@ class FormMultiColumnWizard extends MultiColumnWizard
         return '<span class="button ' . $button . '"></span>';
     }
 
+
     /**
-     * Disable the date picker because it is not designed for front end
-     *
-     * @param string $strId
-     * @param string $strKey
-     * @param string $rgxp
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    protected function getMcWDatePickerString($strId, $strKey, $rgxp)
-    {
+    protected function getMcWDatePickerString(
+        $fieldId,
+        $fieldName,
+        $rgxp = null,
+        $fieldConfiguration = null,
+        $tableName = null
+    ) {
         return '';
     }
+
 }
