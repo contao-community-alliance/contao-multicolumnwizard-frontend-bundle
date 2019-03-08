@@ -13,4 +13,5 @@ use Richardhj\Contao\FormMultiColumnWizard;
  * @license   https://github.com/richardhj/contao-multicolumnwizard-frontend/blob/master/LICENSE LGPL-3.0
  */
 
+
 $GLOBALS['TL_FFL']['multiColumnWizard'] = FormMultiColumnWizard::class;

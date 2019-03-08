@@ -1,5 +1,5 @@
 {
-  "name": "richardhj/contao-multicolumnwizard-frontend",
+  "name": "richardhj/contao-multicolumnwizard-frontend-bundle",
   "type": "contao-module",
   "description": "",
   "keywords": [
@@ -18,21 +18,20 @@
     "source": "https://github.com/richardhj/contao-multicolumnwizard-frontend"
   },
   "require": {
-    "php": "^5.4 || ^7.0",
-    "contao/core-bundle": "^4.4",
-    "contao-community-alliance/composer-plugin": "^2.4 || ^3.0",
+    "php": "^5.6 || ^7.0",
+    "contao/core-bundle": "^4.4.8",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4"
+  },
+  "require-dev": {
+    "phpcq/all-tasks": "~1.2",
+    "contao/manager-bundle": "~4.4"
   },
   "autoload": {
     "psr-4": {
-      "Richardhj\\Contao\\": "src/"
+      "Richardhj\\MultiColumnWizardFrontendBundle\\": "src/"
     }
   },
   "extra": {
-    "contao": {
-      "sources": {
-        "contao": "system/modules/multicolumnwizard_frontend"
-      }
-    }
+    "contao-manager-plugin": "Richardhj\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin"
   }
 }

@@ -11,7 +11,7 @@
  * @license   https://github.com/richardhj/contao-multicolumnwizard-frontend/blob/master/LICENSE LGPL-3.0
  */
 
-namespace Richardhj\Contao;
+namespace Richardhj\MultiColumnWizardFrontendBundle\Contao\Widget;
 
 use Contao\Controller;
 use Contao\Environment;
@@ -25,14 +25,12 @@ use Contao\Widget;
  */
 class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard
 {
-
     /**
      * Template
      *
      * @var string
      */
     protected $strTemplate = 'form_mcw';
-
 
     /**
      * The CSS class prefix
