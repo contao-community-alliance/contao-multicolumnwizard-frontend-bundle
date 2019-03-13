@@ -17,6 +17,8 @@ namespace Richardhj\MultiColumnWizardFrontendBundle\Contao\Widget;
 use Contao\Controller;
 use Contao\Environment;
 use Contao\Widget;
+use Contao\CoreBundle\Exception\ResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -41,167 +43,56 @@ class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Wi
         $this->strTemplate = 'form_mcw';
 
         $GLOBALS['TL_JAVASCRIPT']['mcw_fe_js'] = 'bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe_src.js';
-
-//        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-//        Widget::__construct($arrAttributes);
     }
-//
-//    public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
-//    {
-//        $return = parent::generate($overwriteRowCurrentRow, $onlyRows);
-//
-//        unset($GLOBALS['TL_JAVASCRIPT']['mcw'], $GLOBALS['TL_CSS']['mcw']);
-//
-//        $GLOBALS['TL_JQUERY'][] = <<<'HTML'
-//<script>
-//    $(function () {
-//        $(document).on('click', 'table.multicolumnwizard a[data-operations="new"]', function (event) {
-//            event.preventDefault();
-//
-//            var clonedRow = $(this).closest('tr').clone();
-//            clonedRow.find('input').val('');
-//            $(this).closest('tr').after(clonedRow);
-//
-//            updateMcwInputs($(this).closest('table'));
-//        });
-//
-//        $(document).on('click', 'table.multicolumnwizard a[data-operations="up"]', function (event) {
-//            event.preventDefault();
-//            var row = $(this).parents('tr:first');
-//            row.insertBefore(row.prev());
-//
-//            updateMcwInputs($(this).closest('table'));
-//        });
-//
-//        $(document).on('click', 'table.multicolumnwizard a[data-operations="down"]', function (event) {
-//            event.preventDefault();
-//            var row = $(this).parents('tr:first');
-//            row.insertAfter(row.prev());
-//
-//            updateMcwInputs($(this).closest('table'));
-//        });
-//
-//        $(document).on('click', 'table.multicolumnwizard a[data-operations="delete"]', function (event) {
-//            event.preventDefault();
-//            $(this).closest('tr').remove();
-//
-//            updateMcwInputs($(this).closest('table'));
-//        });
-//
-//        function updateMcwInputs($table) {
-//            $table.find('tr[data-rowid]').each(function (index) {
-//                $(this).attr('data-rowid', index);
-//
-//                $(this).find('label[for]').each(function () {
-//                    $(this).attr('for', $(this).attr('for').replace(/(.+?)(\[\d])(\[.+?])/, '$1[' + index + ']$3'))
-//                });
-//
-//                $(this).find('*[name][id]').each(function () {
-//                    var name = $(this).attr('name').replace(/(.+?)(\[\d])(\[.+?])/, '$1[' + index + ']$3');
-//                    $(this).attr('name', name);
-//                    $(this).attr('id', 'ctrl_' + name);
-//                });
-//            });
-//        }
-//
-//    }(jQuery));
-//</script>
-//HTML;
-//
-//        return $return;
-//    }
-//
-//    protected function generateTable(
-//        $arrUnique,
-//        $arrDatepicker,
-//        $arrColorpicker,
-//        $strHidden,
-//        $arrItems,
-//        $arrHiddenHeader = array(),
-//        $onlyRows = false
-//    ) {
-//        $return = parent::generateTable(
-//            $arrUnique,
-//            $arrDatepicker,
-//            $arrColorpicker,
-//            $strHidden,
-//            $arrItems,
-//            $arrHiddenHeader,
-//            $onlyRows
-//        );
-//
-//        $return = preg_replace('/<script(.*?)>([\s\S]*?)<\/script>/im', '', $return);
-//
-//        return $return;
-//    }
-//
-//    /**
-//     * Generate button string
-//     *
-//     * @param int $level
-//     *
-//     * @return string
-//     */
-//    protected function generateButtonString($level = 0)
-//    {
-//        $return = '';
-//
-//        // Add buttons
-//        foreach ($this->arrButtons as $button => $image) {
-//            if (false === $image) {
-//                continue;
-//            }
-//
-//            $return .= sprintf(
-//                '<a data-operations="%s" href="%s" class="widgetImage" title="%s">%s</a> ',
-//                $button,
-//                str_replace(
-//                    'index.php',
-//                    strtok(Environment::get('requestUri'), '?'),
-//                    Controller::addToUrl(
-//                        http_build_query(
-//                            [
-//                                $this->strCommand => $button,
-//                                'cid'             => $level,
-//                                'id'              => $this->currentRecord,
-//                            ]
-//                        ),
-//                        false
-//                    )
-//                ),
-//                $GLOBALS['TL_LANG']['MSC']['tw_r' . specialchars($button)],
-//                $this->getButtonContent($button) # We don't want to output an image and don't provide $image
-//            );
-//        }
-//
-//        return $return;
-//    }
-//
-//
-//    /**
-//     * Get the content of the button, either text or image
-//     *
-//     * @param string $button The button name
-//     *
-//     * @return string
-//     */
-//    protected function getButtonContent($button)
-//    {
-//        return '<span class="button ' . $button . '"></span>';
-//    }
-//
-//
-//    /**
-//     * {@inheritdoc}
-//     */
-//    protected function getMcWDatePickerString(
-//        $fieldId,
-//        $fieldName,
-//        $rgxp = null,
-//        $fieldConfiguration = null,
-//        $tableName = null
-//    ) {
-//        return '';
-//    }
 
+    /**
+     * Convert a string to a response object
+     * Copy from ajax.
+     *
+     * @param string $str The string to convert.
+     *
+     * @return Response
+     */
+    protected function convertToResponse($str)
+    {
+        return new Response(\Controller::replaceOldBePaths($str));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
+    {
+        // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
+        $action      = \Contao\Input::post('action');
+        $name        = \Contao\Input::post('name');
+        $maxRowCount = \Contao\Input::post('maxRowId');
+
+        if ('mcwCreateNewRow' == $action && $name == $this->strName) {
+            // Rewrite the values.
+            $newRowCount = ($maxRowCount + 1);
+            foreach ($this->columnFields as $strKey => $arrField) {
+                $this->varValue[$newRowCount][$strKey] = '';
+            }
+
+            // Generate the data.
+            $result = parent::generate($newRowCount, true);
+            throw new ResponseException($this->convertToResponse($result));
+        } else {
+            return parent::generate($overwriteRowCurrentRow, $onlyRows);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function initializeWidget(&$arrField, $intRow, $strKey, $varValue)
+    {
+        // If null replace it with an empty string.
+        if ($varValue == '' && $arrField['default'] == null) {
+            $arrField['default'] = '';
+        }
+
+        return parent::initializeWidget($arrField, $intRow, $strKey, $varValue);
+    }
 }

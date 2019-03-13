@@ -551,69 +551,94 @@ Object.append(MultiColumnWizard,
             }
 
             var self = this;
-
-            console.log('START REQUEST');
-
+            var params = 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '');
+            xhr.open('POST', window.location.href);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log('Something went wrong.  Name is now ' + xhr.responseText);
+            xhr.onload = function () {
+                if (xhr.status === 200)
+                {
+                    console.log(xhr.responseText);
+                    var text = xhr.responseText;
+                    var json;
+
+                    // Support both plain text and JSON responses
+                    try
+                    {
+                        json = JSON.decode(text, this.options.secure);
+                    }
+                    catch (e)
+                    {
+                        json = {'content': text};
+                    }
+
+                    // Empty response
+                    if (json === null)
+                    {
+                        json = {'content': ''};
+                    }
+                    else if (typeof(json) != 'object')
+                    {
+                        json = {'content': text};
+                    }
+
+                    // Isolate scripts and execute them
+                    if (json.content != '')
+                    {
+                        json.content = json.content.stripScripts(function (script) {
+                            json.javascript = script.replace(/<!--|\/\/-->|<!\[CDATA\[\/\/>|<!]]>/g, '');
+                        });
+                        if (json.javascript && this.options.evalScripts)
+                        {
+                            Browser.exec(json.javascript);
+                        }
+                    }
+
+                    el.removeClass('rotate');
+
+                    // Text to html.
+                    var newEl = new Element('div', {
+                        html: json.content
+                    });
+
+                    // Inject it on the right place.
+                    $(newEl).getElement('tr').inject(row, 'after');
+
+                    // Execute the JS from widgets.
+                    json.javascript && Browser.exec(json.javascript);
+
+                    // Rebind the events.
+                    $(newEl).getElements('td.operations a').each(function (operation) {
+                        var key = operation.get('data-operations');
+
+                        // call static load callbacks
+                        if (MultiColumnWizard.operationLoadCallbacks[key])
+                        {
+                            MultiColumnWizard.operationLoadCallbacks[key].each(function (callback) {
+                                callback.pass([operation, el], self)();
+                            });
+                        }
+
+                        // call instance load callbacks
+                        if (self.operationLoadCallbacks[key])
+                        {
+                            self.operationLoadCallbacks[key].each(function (callback) {
+                                callback.pass([operation, el], self)();
+                            });
+                        }
+                    });
+
+                    self.updateOperations();
+                    self.asyncBlock = false;
                 }
-                else if (xhr.status !== 200) {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
+                else if (xhr.status !== 200)
+                {
+                    console.log(xhr.status);
+                    el.removeClass('rotate');
+                    self.asyncBlock = false;
                 }
             };
-            xhr.send(encodeURI('mcw_ajax=' + '132'));
-            el.removeClass('rotate');
-            self.asyncBlock = false;
-            console.log('End REQUEST');
-//             new Request.Contao({
-//                 evalScripts: false,
-//                 onSuccess:   function (txt, json) {
-//                     el.removeClass('rotate');
-//                     // Text to html.
-//                     var newEl = new Element('div', {
-//                         html: json.content
-//                     });
-//                     // Inject it on the right place.
-//                     $(newEl).getElement('tr').inject(row, 'after');
-//                     // Execute the JS from widgets.
-//                     json.javascript && Browser.exec(json.javascript);
-//                     // Rebind the events.
-//                     $(newEl).getElements('td.operations a').each(function (operation) {
-//                         var key = operation.get('data-operations');
-//
-//                         // call static load callbacks
-//                         if (MultiColumnWizard.operationLoadCallbacks[key])
-//                         {
-//                             MultiColumnWizard.operationLoadCallbacks[key].each(function (callback) {
-//                                 callback.pass([operation, el], self)();
-//                             });
-//                         }
-//
-//                         // call instance load callbacks
-//                         if (self.operationLoadCallbacks[key])
-//                         {
-//                             self.operationLoadCallbacks[key].each(function (callback) {
-//                                 callback.pass([operation, el], self)();
-//                             });
-//                         }
-//                     });
-//                     self.updateOperations();
-//                     self.asyncBlock = false;
-//                 },
-//                 onFailure:   function (xhr) {
-//                     el.removeClass('rotate');
-//                     self.asyncBlock = false;
-//                 }
-//             }).post({
-//                 "action":        "mcwCreateNewRow",
-//                 "name":          fieldName,
-//                 "maxRowId":      maxRowId,
-//                 "REQUEST_TOKEN": Contao.request_token
-//             });
+            xhr.send(encodeURI(params));
         },
 
         /**
