@@ -555,6 +555,7 @@ Object.append(MultiColumnWizard,
             var xhr = new XMLHttpRequest();
             xhr.open('POST', window.location.href);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.onload = function () {
                 if (xhr.status === 200)
                 {
