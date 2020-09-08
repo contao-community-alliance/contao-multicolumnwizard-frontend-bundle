@@ -1,16 +1,25 @@
 <?php
 
-use Richardhj\MultiColumnWizardFrontendBundle\Contao\Widget\FormMultiColumnWizard;
-
 /**
- * This file is part of richardhj/contao-multicolumnwizard-frontend.
+ * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * Copyright (c) 2016-2017 Richard Henkenjohann
+ * (c) 2020 Contao Community Alliance.
  *
- * @package   richardhj/contao-multicolumnwizard-frontend
- * @author    Richard Henkenjohann <richardhenkenjohann@googlemail.com>
- * @copyright 2016-2017 Richard Henkenjohann
- * @license   https://github.com/richardhj/contao-multicolumnwizard-frontend/blob/master/LICENSE LGPL-3.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * This project is provided in good faith and hope to be usable by anyone.
+ *
+ * @package    contao-community-alliance/contao-multicolumnwizard-frontend
+ * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
+ * @author     Stefan Heimes <heimes@men-at-work.de>
+ * @author     Ingolf Steinhardt <info@e-spin.de>
+ * @copyright  2020 Contao Community Alliance.
+ * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
+ *             LGPL-3.0-or-later
+ * @filesource
  */
+
+use ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\Contao\Widget\FormMultiColumnWizard;
 
 $GLOBALS['TL_FFL']['multiColumnWizard'] = FormMultiColumnWizard::class;

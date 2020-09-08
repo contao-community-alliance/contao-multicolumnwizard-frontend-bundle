@@ -1,1 +1,4 @@
 .idea/
+vendor/
+src/Resources/public/prepros.config
+composer.lock

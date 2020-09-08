@@ -1,32 +1,34 @@
 <?php
 
 /**
- * This file is part of richardhj/contao-multicolumnwizard-frontend.
+ * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * Copyright (c) 2016-2017 Richard Henkenjohann
+ * (c) 2020 Contao Community Alliance.
  *
- * @package   richardhj/contao-multicolumnwizard-frontend
- * @author    Richard Henkenjohann <richardhenkenjohann@googlemail.com>
- * @author    Stefan Heimes <heimes@men-at-work.de>
- * @copyright 2016-2017 Richard Henkenjohann
- * @license   https://github.com/richardhj/contao-multicolumnwizard-frontend/blob/master/LICENSE LGPL-3.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * This project is provided in good faith and hope to be usable by anyone.
+ *
+ * @package    contao-community-alliance/contao-multicolumnwizard-frontend
+ * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
+ * @author     Stefan Heimes <heimes@men-at-work.de>
+ * @author     Ingolf Steinhardt <info@e-spin.de>
+ * @copyright  2020 Contao Community Alliance.
+ * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
+ *             LGPL-3.0-or-later
+ * @filesource
  */
 
-namespace Richardhj\MultiColumnWizardFrontendBundle\Contao\Widget;
+namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\Contao\Widget;
 
 use Contao\Controller;
-use Contao\Environment;
-use Contao\Widget;
+use Contao\Input;
 use Contao\CoreBundle\Exception\ResponseException;
+use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 use Symfony\Component\HttpFoundation\Response;
 
-
-/**
- * Class FormMultiColumnWizard
- *
- * @package Richardhj\Contao
- */
-class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard
+class FormMultiColumnWizard extends MultiColumnWizard
 {
     /**
      * Don't use parent's but parent parent's __construct
@@ -42,7 +44,10 @@ class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Wi
         $this->strPrefix   = 'widget widget-mcw';
         $this->strTemplate = 'form_mcw';
 
-        $GLOBALS['TL_JAVASCRIPT']['mcw_fe_js'] = 'bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe_src.js';
+        $GLOBALS['TL_BODY']['mcw_sortable_js'] =
+            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
+        $GLOBALS['TL_BODY']['mcw_fe_js']       =
+            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
     }
 
     /**
@@ -55,7 +60,7 @@ class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Wi
      */
     protected function convertToResponse($str)
     {
-        return new Response(\Controller::replaceOldBePaths($str));
+        return new Response(Controller::replaceOldBePaths($str));
     }
 
     /**
@@ -64,9 +69,9 @@ class FormMultiColumnWizard extends \MenAtWork\MultiColumnWizardBundle\Contao\Wi
     public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
     {
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
-        $action      = \Contao\Input::post('action');
-        $name        = \Contao\Input::post('name');
-        $maxRowCount = \Contao\Input::post('maxRowId');
+        $action      = Input::post('action');
+        $name        = Input::post('name');
+        $maxRowCount = Input::post('maxRowId');
 
         if ('mcwCreateNewRow' == $action && $name == $this->strName) {
             // Rewrite the values.

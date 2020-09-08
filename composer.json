@@ -1,10 +1,16 @@
 {
   "name": "contao-community-alliance/contao-multicolumnwizard-frontend-bundle",
-  "type": "contao-module",
-  "description": "",
+  "type": "contao-bundle",
+  "description": "Frontend support for the MultiColumnWizard",
   "keywords": [
-    "contao"
+    "contao",
+    "multicolumnwizard",
+    "mcw",
+    "frontend",
+    "frontendediting",
+    "metamodels"
   ],
+  "homepage": "http://c-c-a.org/",
   "license": "LGPL-3.0-or-later",
   "authors": [
     {
@@ -24,15 +30,20 @@
   },
   "require-dev": {
     "phpcq/all-tasks": "~1.2",
-    "contao/manager-bundle": "~4.4"
+    "contao/manager-bundle": "~4.9"
   },
   "autoload": {
     "psr-4": {
-      "Richardhj\\MultiColumnWizardFrontendBundle\\": "src/"
+      "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\Test\\": "tests/"
     }
   },
   "extra": {
-    "contao-manager-plugin": "Richardhj\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin",
+    "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin",
     "branch-alias": {
       "dev-feature/2.2.0": "2.2.x-dev"
     }
