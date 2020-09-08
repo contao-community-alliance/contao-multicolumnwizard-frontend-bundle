@@ -100,4 +100,27 @@ class FormMultiColumnWizard extends MultiColumnWizard
 
         return parent::initializeWidget($arrField, $intRow, $strKey, $varValue);
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function generateScriptBlock($strId, $maxCount, $minCount)
+    {
+        $script = <<<SCRIPT
+
+<script>
+window.addEventListener('DOMContentLoaded', function(e){
+    window["MCW_" + %s] = MultiColmTableName("ctrl_" + %s, %s, %s)._multicolmnBindEvents();
+});
+</script>
+SCRIPT;
+        return sprintf(
+            $script,
+            json_encode($strId),
+            json_encode($strId),
+            intval($maxCount),
+            intval($minCount)
+        );
+    }
+
 }
