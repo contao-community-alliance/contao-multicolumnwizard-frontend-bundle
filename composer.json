@@ -8,7 +8,8 @@
     "mcw",
     "frontend",
     "frontendediting",
-    "metamodels"
+    "metamodels",
+    "cca"
   ],
   "homepage": "http://c-c-a.org/",
   "license": "LGPL-3.0-or-later",
@@ -26,7 +27,7 @@
   "require": {
     "php": "^7.2",
     "contao/core-bundle": "^4.9.0, <4.13.0",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.4"
+    "menatwork/contao-multicolumnwizard-bundle": "^3.4.7"
   },
   "require-dev": {
     "phpcq/all-tasks": "~1.2",
