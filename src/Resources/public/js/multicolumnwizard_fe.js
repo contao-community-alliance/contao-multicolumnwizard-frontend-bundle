@@ -1,7 +1,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2020 Contao Community Alliance.
+ * (c) 2020-2021 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,7 +10,7 @@
  *
  * @package    contao-community-alliance/contao-multicolumnwizard-frontend
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2020 Contao Community Alliance.
+ * @copyright  2020-2021 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -18,70 +18,63 @@
  */
 
 (function() {
-    var _parent_table         = '';
-    var _minRowCountMultiColm = 0;
-    var _maxRowCountMultiColm = 0;
+    this.MultiColmTableName = function() {
+        this.minRowCount = 0;
+        this.maxRowCount = 0;
+        this.selector = '';
+        this.eventArr = [];
 
-    var MultiColmTableName = function(selector, maxCount, minCount) {
-        this.container = selector;
-        _parent_table  = this.container;
+        // Define option defaults
+        let defaults = {
+            selector: '',
+            minRow  : 0,
+            maxRow  : 0,
+        };
 
-        this.minRowCount = minCount;
-        this.maxRowCount = maxCount;
+        if (arguments[0] && typeof arguments[0] === 'object') {
+            this.options = extendDefaults(defaults, arguments[0]);
+        }
 
-        _minRowCountMultiColm = this.minRowCount;
-        _maxRowCountMultiColm = this.maxRowCount;
+        this.selector = this.options.selector;
+        this.minRowCount = this.options.minRow;
+        this.maxRowCount = this.options.maxRow;
 
-        var mcwTable = document.querySelector('#' + this.container + ' tbody');
+        let mcwTable = document.querySelector('#' + this.selector + ' tbody');
         new Sortable(mcwTable, {
             handle   : '.op-move', // handle's class
             animation: 150,
         });
+
+        initializeEvents(this);
     };
 
-    // events binding
-    MultiColmTableName.prototype._multicolmnBindEvents = function() {
-        var _actionElems = document.querySelectorAll('#' + this.container + ' tbody > tr > td > a');
+    MultiColmTableName.prototype.add = function(e) {
+        e.preventDefault();
 
-        //bind click event
-        for (var i = 0; i < _actionElems.length; i++) {
-            var _action = _actionElems[i].getAttribute('data-operations');
-
-            if (_action === 'new') {
-                _actionElems[i].addEventListener('click', _create_row_multicolmn);
-            }
-
-            if (_action === 'delete') {
-                _actionElems[i].addEventListener('click', _delete_row_multicolmn);
-            }
-        }
-    };
-
-    // create new row functionality
-    var _create_row_multicolmn = function(e) {
-        var _current_node = this;
+        let _current_node = e.target.parentNode;
 
         _current_node.classList.add('rotate');
 
-        var fieldName = document.querySelector('#' + _parent_table).getAttribute('data-name');
-        var rows      = document.querySelectorAll('#' + _parent_table + ' tbody tr');
+        let fieldName = document.querySelector('#' + this.selector).getAttribute('data-name');
+        let rows = document.querySelectorAll('#' + this.selector + ' tbody tr');
+        let _ = this;
 
-        if (_maxRowCountMultiColm == 0 || (_maxRowCountMultiColm > 0 && rows.length < _maxRowCountMultiColm)) {
-            var maxRowId = 0;
+        if (_.maxRowCount == 0 || (_.maxRowCount > 0 && rows.length < _.maxRowCount)) {
+            let maxRowId = 0;
 
-            for (var i = 0; i < rows.length; i++) {
+            for (let i = 0; i < rows.length; i++) {
                 maxRowId = Math.max(maxRowId, (rows[i].getAttribute('data-rowid')));
             }
 
-            var params = 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
-            var xhr    = new XMLHttpRequest();
+            let params = 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
+            let xhr = new XMLHttpRequest();
             xhr.open('POST', window.location.href);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    var text = xhr.responseText;
-                    var json;
+                    let text = xhr.responseText;
+                    let json;
 
                     // Support both plain text and JSON responses
                     try {
@@ -99,18 +92,12 @@
                         }
                     }
 
-                    // Text to html.
-                    //var _body_contents = _multiColmTable.querySelector('tbody').innerHTML;
-                    //var _new_row       = document.querySelector('#'+_parent_table+' tbody').insertAdjacentHTML('beforeend', (json.content.replace('<table>', '').replace('</table>', '')));
-                    //this.parentElement.parentElement.after((json.content.replace('<table>', '').replace('</table>', '')));
-                    //e.target.parentNode.parentNode.parentNode.after((json.content.replace('<table>', '').replace('</table>', '')));
-
-                    var _html = json.content.replace('<table>', '').replace('</table>', '');
+                    let _html = json.content.replace('<table>', '').replace('</table>', '');
 
                     function htmlToElement(html)
                     {
-                        var template       = document.createElement('template');
-                        html               = html.trim(); // Never return a text node of whitespace as the result
+                        let template = document.createElement('template');
+                        html = html.trim(); // Never return a text node of whitespace as the result
                         template.innerHTML = html;
 
                         return template.content.firstChild;
@@ -119,11 +106,8 @@
                     e.target.parentNode.parentNode.parentNode.after(htmlToElement(_html));
 
                     // Rebind the events.
-                    new MultiColmTableName(
-                        _parent_table,
-                        _maxRowCountMultiColm,
-                        _minRowCountMultiColm,
-                    )._multicolmnBindEvents();
+                    removeEvents(_);
+                    initializeEvents(_);
                     _current_node.classList.remove('rotate');
 
                 } else {
@@ -134,30 +118,88 @@
                 }
             };
             xhr.send(encodeURI(params));
+            return;
         } else {
+            _current_node.classList.remove('rotate');
             return false;
         }
     };
 
-    //deleting row functionality
-    var _delete_row_multicolmn = function(e) {
-        var rows = document.querySelectorAll('#' + _parent_table + ' tbody tr');
+    MultiColmTableName.prototype.delete = function(e) {
+        e.preventDefault();
+
+        let rows = document.querySelectorAll('#' + this.selector + ' tbody tr');
 
         if (rows.length == 1) {
             return;
         }
 
-        if (_minRowCountMultiColm > 0 && rows.length <= _minRowCountMultiColm) {
+        if (this.minRowCount > 0 && rows.length <= this.minRowCount) {
             return;
         } else {
-            this.parentElement.parentElement.remove();
+            e.target.parentNode.parentNode.parentNode.remove();
             return;
         }
     };
 
-    // export to global namespace
-    window.MultiColmTableName = function(selector, maxCount, minCount) {
-        return new MultiColmTableName(selector, maxCount, minCount);
+    MultiColmTableName.prototype.move = function() {
+
     };
 
-})();
+    // Utility method to extend defaults with user options
+    function extendDefaults(source, properties)
+    {
+        let property;
+        for (property in properties) {
+            if (properties.hasOwnProperty(property)) {
+                source[property] = properties[property];
+            }
+        }
+        return source;
+    }
+
+    function initializeEvents(_prop)
+    {
+        let _ = _prop;
+        let _actionElems = document.querySelectorAll('#' + _.selector + ' tbody > tr > td > a');
+
+        //bind click event
+        for (let i = 0; i < _actionElems.length; i++) {
+            let _action = _actionElems[i].getAttribute('data-operations');
+
+            let eventObj = {
+                addEvent   : null,
+                deleteEvent: null,
+                refElem    : null,
+            }
+
+            if (_action === 'new') {
+                let __add = _.add.bind(_);
+                eventObj.addEvent = __add;
+                eventObj.refElem = _actionElems[i];
+                _actionElems[i].addEventListener('click', __add);
+            }
+
+            if (_action === 'delete') {
+                let __delete = _.delete.bind(_);
+                eventObj.deleteEvent = __delete;
+                _actionElems[i].addEventListener('click', __delete);
+            }
+
+            if (eventObj.refElem != null) {
+                _.eventArr.push(eventObj);
+            }
+        }
+    }
+
+    function removeEvents(_prop)
+    {
+        let _ = _prop;
+
+        for (let i = 0; i < _.eventArr.length; i++) {
+            _.eventArr[i].refElem.removeEventListener('click', _.eventArr[i].addEvent);
+            _.eventArr[i].refElem.removeEventListener('click', _.eventArr[i].deleteEvent);
+        }
+    }
+
+}());
