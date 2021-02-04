@@ -46,6 +46,7 @@
         });
 
         initializeEvents(this);
+        checkMaxMinRow(this);
     };
 
     MultiColmTableName.prototype.add = function(e) {
@@ -109,6 +110,7 @@
                     removeEvents(_);
                     initializeEvents(_);
                     _current_node.classList.remove('rotate');
+                    checkMaxMinRow(_);
 
                 } else {
                     if (xhr.status !== 200) {
@@ -121,6 +123,7 @@
             return;
         } else {
             _current_node.classList.remove('rotate');
+            checkMaxMinRow(_);
             return false;
         }
     };
@@ -138,12 +141,10 @@
             return;
         } else {
             e.target.parentNode.parentNode.parentNode.remove();
+            checkMaxMinRow(this);
+
             return;
         }
-    };
-
-    MultiColmTableName.prototype.move = function() {
-
     };
 
     // Utility method to extend defaults with user options
@@ -202,4 +203,34 @@
         }
     }
 
+    function checkMaxMinRow(_prop) {
+        let _ = _prop;
+        let rows = document.querySelectorAll('#' + _.selector + ' tbody tr');
+        let _actionElems = document.querySelectorAll('#' + _.selector + ' tbody > tr > td > a');
+
+        var _maxRowCount = _.maxRowCount;
+        var _minRowCount = _.minRowCount;
+
+        _actionElems.forEach(function(elem){
+            var _action = elem.getAttribute('data-operations');
+
+            if(_action != undefined && _action.length != 0) {
+                if(_action.trim() == 'new') {
+                    if (_maxRowCount == rows.length) {
+                        elem.classList.add('disabled');
+                    } else {
+                        elem.classList.remove('disabled');
+                    }
+                }
+
+                if(_action.trim() == 'delete') {
+                    if (_minRowCount == rows.length) {
+                        elem.classList.add('disabled');
+                    } else {
+                        elem.classList.remove('disabled');
+                    }
+                }
+            }
+        });
+    };
 }());
