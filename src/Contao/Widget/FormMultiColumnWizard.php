@@ -110,13 +110,17 @@ class FormMultiColumnWizard extends MultiColumnWizard
 
 <script>
 window.addEventListener('DOMContentLoaded', function(e){
-    window["MCW_" + %s] = MultiColmTableName("ctrl_" + %s, %s, %s)._multicolmnBindEvents();
+
+    new MultiColmTableName({
+        selector: "ctrl_" + %s,
+        maxRow: %s,
+        minRow: %s
+    });
 });
 </script>
 SCRIPT;
         return sprintf(
             $script,
-            json_encode($strId),
             json_encode($strId),
             intval($maxCount),
             intval($minCount)
