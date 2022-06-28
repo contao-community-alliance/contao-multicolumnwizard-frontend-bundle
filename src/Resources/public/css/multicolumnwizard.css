@@ -1,0 +1,54 @@
+/**
+ * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
+ *
+ * (c) 2020-2021 Contao Community Alliance.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * This project is provided in good faith and hope to be usable by anyone.
+ *
+ * @package    contao-community-alliance/contao-multicolumnwizard-frontend
+ * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
+ * @author     Stefan Heimes <heimes@men-at-work.de>
+ * @author     Ingolf Steinhardt <info@e-spin.de>
+ * @copyright  2020-2021 Contao Community Alliance.
+ * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
+ *             LGPL-3.0-or-later
+ * @filesource
+ * @info       compress with https://prepros.io/
+ */
+
+.multicolumnwizard .tl_checkbox_single_container {
+    margin-top: 0;
+}
+
+.multicolumnwizard .hidelabel h3,
+.multicolumnwizard .hidelabel label {
+    display: none;
+}
+
+.multicolumnwizard a[rel="op-move"] {
+    cursor: move;
+}
+
+.multicolumnwizard a.disabled {
+    cursor: not-allowed;
+    filter: saturate(0);
+}
+
+.multicolumnwizard a.rotate img {
+    -webkit-animation: mcw-spin .4s linear infinite;
+    -moz-animation: mcw-spin .4s linear infinite;
+    animation: mcw-spin .4s linear infinite;
+}
+
+@-moz-keyframes mcw-spin {
+    100% {-moz-transform: rotate(360deg);}
+}
+@-webkit-keyframes mcw-spin {
+    100% {-webkit-transform: rotate(360deg);}
+}
+@keyframes mcw-spin {
+    100% {-webkit-transform: rotate(360deg); transform:rotate(360deg);}
+}

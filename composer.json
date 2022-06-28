@@ -1,11 +1,18 @@
 {
-  "name": "richardhj/contao-multicolumnwizard-frontend",
-  "type": "contao-module",
-  "description": "",
+  "name": "contao-community-alliance/contao-multicolumnwizard-frontend-bundle",
+  "type": "contao-bundle",
+  "description": "Frontend support for the MultiColumnWizard",
   "keywords": [
-    "contao"
+    "contao",
+    "multicolumnwizard",
+    "mcw",
+    "frontend",
+    "frontendediting",
+    "metamodels",
+    "cca"
   ],
-  "license": "LGPL-3.0+",
+  "homepage": "https://c-c-a.org/",
+  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "Richard Henkenjohann",
@@ -14,25 +21,33 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/richardhj/contao-multicolumnwizard-frontend/issues",
-    "source": "https://github.com/richardhj/contao-multicolumnwizard-frontend"
+    "issues": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend/issues",
+    "source": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend"
   },
   "require": {
-    "php": "^5.4 || ^7.0",
-    "contao/core-bundle": "^3.1 || ^4.4",
-    "contao-community-alliance/composer-plugin": "^2.4 || ^3.0",
-    "menatwork/contao-multicolumnwizard": "^3.3.17"
+    "php": "^7.4",
+    "contao/core-bundle": "^4.9.0, <4.13.0",
+    "menatwork/contao-multicolumnwizard-bundle": "^3.4.7"
+  },
+  "require-dev": {
+    "phpcq/all-tasks": "~1.2",
+    "contao/manager-bundle": "~4.9"
   },
   "autoload": {
     "psr-4": {
-      "Richardhj\\Contao\\": "src/"
+      "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\Test\\": "tests/"
     }
   },
   "extra": {
-    "contao": {
-      "sources": {
-        "contao": "system/modules/multicolumnwizard_frontend"
-      }
+    "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin",
+    "branch-alias": {
+      "dev-support/1.1.x": "1.1.x-dev",
+      "dev-master": "2.2.x-dev"
     }
   }
 }
