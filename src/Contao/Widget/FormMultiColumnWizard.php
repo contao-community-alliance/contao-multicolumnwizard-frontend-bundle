@@ -66,7 +66,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     /**
      * @inheritdoc
      */
-    public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
+    public function generate($overwriteRowCurrRow = null, $onlyRows = false)
     {
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
         $action      = Input::post('action');
@@ -76,7 +76,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
         if ('mcwCreateNewRow' == $action && $name == $this->strName) {
             // Rewrite the values.
             $newRowCount = ($maxRowCount + 1);
-            foreach ($this->columnFields as $strKey => $arrField) {
+            foreach (\array_keys($this->columnFields) as $strKey) {
                 $this->varValue[$newRowCount][$strKey] = '';
             }
 
@@ -84,7 +84,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
             $result = parent::generate($newRowCount, true);
             throw new ResponseException($this->convertToResponse($result));
         } else {
-            return parent::generate($overwriteRowCurrentRow, $onlyRows);
+            return parent::generate($overwriteRowCurrRow, $onlyRows);
         }
     }
 
