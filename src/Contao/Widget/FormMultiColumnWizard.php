@@ -47,7 +47,8 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $GLOBALS['TL_BODY']['mcw_sortable_js'] =
             '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
         $GLOBALS['TL_BODY']['mcw_fe_js']       =
-            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
+            '<script type="text/javascript"
+                     src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
     }
 
     /**
@@ -126,5 +127,4 @@ SCRIPT;
             intval($minCount)
         );
     }
-
 }
