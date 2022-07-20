@@ -25,13 +25,13 @@
     "source": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend"
   },
   "require": {
-    "php": "^7.4",
-    "contao/core-bundle": "^4.9.0, <4.13.0",
+    "php": "^7.4 || ^8.0",
+    "contao/core-bundle": "^4.13.0, <5.0",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4.7"
   },
   "require-dev": {
     "phpcq/all-tasks": "~1.2",
-    "contao/manager-bundle": "~4.9"
+    "contao/manager-bundle": "^4.13.0, <5.0"
   },
   "autoload": {
     "psr-4": {
@@ -46,8 +46,7 @@
   "extra": {
     "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin",
     "branch-alias": {
-      "dev-support/1.1.x": "1.1.x-dev",
-      "dev-master": "2.2.x-dev"
+      "dev-feature/2.3.0": "2.3.x-dev"
     }
   }
 }
