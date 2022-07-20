@@ -26,7 +26,7 @@ use Contao\Controller;
 use Contao\CoreBundle\Exception\ResponseException;
 use Contao\Input;
 use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
-use Symfony\Contracts\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class FormMultiColumnWizard extends MultiColumnWizard
 {
@@ -94,7 +94,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     protected function initializeWidget(&$arrField, $intRow, $strKey, $varValue)
     {
         // If null replace it with an empty string.
-        if ($varValue == '' && $arrField['default'] == null) {
+        if ($varValue == '' && isset($arrField['default']) && $arrField['default'] == null) {
             $arrField['default'] = '';
         }
 
