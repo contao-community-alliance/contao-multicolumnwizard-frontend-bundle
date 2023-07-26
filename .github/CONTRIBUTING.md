@@ -62,5 +62,5 @@ create.
 [1]: https://github.com/contao-community-alliance
 [2]: http://help.github.com/pull-requests/
 [3]: https://github.com/phpcq/coding-standard
-[4]: https://github.com/contao-community-alliance/dc-general/pull/new/master
-[5]: https://github.com/contao-community-alliance/dc-general/pull/new/develop
+[4]: https://github.com/contao-community-alliance/contao-community-alliance/contao-textfield-multiple-bundle/pull/new/master
+[5]: https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/new/develop
