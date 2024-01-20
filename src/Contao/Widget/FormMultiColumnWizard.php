@@ -107,6 +107,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
      * @param array $arrAttributes The attributes for the widget.
      *
      * @noinspection PhpMissingParentConstructorInspection
+     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct($arrAttributes = [])
