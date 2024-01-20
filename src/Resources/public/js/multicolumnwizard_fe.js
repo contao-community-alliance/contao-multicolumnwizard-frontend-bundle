@@ -1,7 +1,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2020-2021 Contao Community Alliance.
+ * (c) 2020-2022 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,7 +10,7 @@
  *
  * @package    contao-community-alliance/contao-multicolumnwizard-frontend
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2020-2021 Contao Community Alliance.
+ * @copyright  2020-2022 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -111,7 +111,6 @@
                     initializeEvents(_);
                     _current_node.classList.remove('rotate');
                     checkMaxMinRow(_);
-
                 } else {
                     if (xhr.status !== 200) {
                         console.log(xhr.status);
@@ -172,7 +171,7 @@
                 addEvent   : null,
                 deleteEvent: null,
                 refElem    : null,
-            }
+            };
 
             if (_action === 'new') {
                 let __add = _.add.bind(_);
@@ -203,7 +202,8 @@
         }
     }
 
-    function checkMaxMinRow(_prop) {
+    function checkMaxMinRow(_prop)
+    {
         let _ = _prop;
         let rows = document.querySelectorAll('#' + _.selector + ' tbody tr');
         let _actionElems = document.querySelectorAll('#' + _.selector + ' tbody > tr > td > a');
@@ -211,11 +211,11 @@
         var _maxRowCount = _.maxRowCount;
         var _minRowCount = _.minRowCount;
 
-        _actionElems.forEach(function(elem){
+        _actionElems.forEach(function(elem) {
             var _action = elem.getAttribute('data-operations');
 
-            if(_action != undefined && _action.length != 0) {
-                if(_action.trim() == 'new') {
+            if (_action != undefined && _action.length != 0) {
+                if (_action.trim() == 'new') {
                     if (_maxRowCount == rows.length) {
                         elem.classList.add('disabled');
                     } else {
@@ -223,7 +223,7 @@
                     }
                 }
 
-                if(_action.trim() == 'delete') {
+                if (_action.trim() == 'delete') {
                     if (_minRowCount == rows.length) {
                         elem.classList.add('disabled');
                     } else {
