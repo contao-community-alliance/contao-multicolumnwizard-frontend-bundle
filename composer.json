@@ -1,7 +1,8 @@
 {
   "name": "contao-community-alliance/contao-multicolumnwizard-frontend-bundle",
-  "type": "contao-bundle",
   "description": "Frontend support for the MultiColumnWizard",
+  "license": "LGPL-3.0-or-later",
+  "type": "contao-bundle",
   "keywords": [
     "contao",
     "multicolumnwizard",
@@ -11,8 +12,6 @@
     "metamodels",
     "cca"
   ],
-  "homepage": "https://c-c-a.org/",
-  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "Richard Henkenjohann",
@@ -20,18 +19,19 @@
       "role": "Developer"
     }
   ],
+  "homepage": "https://c-c-a.org/",
   "support": {
     "issues": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend/issues",
     "source": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend"
   },
   "require": {
-    "php": "^7.4 || ^8.0",
-    "contao/core-bundle": "^4.13.0, <5.0",
+    "php": "^8.1",
+    "contao/core-bundle": "^4.13.0 <5.0",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4.7"
   },
   "require-dev": {
-    "phpcq/all-tasks": "~1.2",
-    "contao/manager-bundle": "^4.13.0, <5.0"
+    "contao/manager-bundle": "^4.13.0 <5.0",
+    "phpcq/runner-bootstrap": "^1.0@dev"
   },
   "autoload": {
     "psr-4": {
@@ -43,10 +43,17 @@
       "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\Test\\": "tests/"
     }
   },
+  "config": {
+    "allow-plugins": {
+      "contao-components/installer": true,
+      "contao/manager-plugin": true,
+      "php-http/discovery": true
+    }
+  },
   "extra": {
-    "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin",
     "branch-alias": {
       "dev-feature/2.3.0": "2.3.x-dev"
-    }
+    },
+    "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin"
   }
 }

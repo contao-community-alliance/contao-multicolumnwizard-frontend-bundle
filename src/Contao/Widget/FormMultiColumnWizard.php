@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2022 Contao Community Alliance.
+ * (c) 2020-2024 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
  * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2022 Contao Community Alliance.
+ * @copyright  2020-2024 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -36,6 +36,8 @@ class FormMultiColumnWizard extends MultiColumnWizard
      * @param array|null $arrAttributes
      *
      * @noinspection PhpMissingParentConstructorInspection
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct($arrAttributes = null)
     {
@@ -44,10 +46,11 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $this->strPrefix   = 'widget widget-mcw';
         $this->strTemplate = 'form_mcw';
 
+        $path                                  = 'bundles/multicolumnwizardfrontend/js/';
         $GLOBALS['TL_BODY']['mcw_sortable_js'] =
-            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
+            '<script type="text/javascript" src="' . $path . 'Sortable.min.js"></script>';
         $GLOBALS['TL_BODY']['mcw_fe_js']       =
-            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
+            '<script type="text/javascript" src="' . $path . 'multicolumnwizard_fe.min.js"></script>';
     }
 
     /**
@@ -65,6 +68,8 @@ class FormMultiColumnWizard extends MultiColumnWizard
 
     /**
      * @inheritdoc
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
     {
@@ -73,7 +78,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $name        = Input::post('name');
         $maxRowCount = Input::post('maxRowId');
 
-        if ('mcwCreateNewRow' == $action && $name == $this->strName) {
+        if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
             $newRowCount = ($maxRowCount + 1);
             foreach ($this->columnFields as $strKey => $arrField) {
@@ -94,7 +99,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     protected function initializeWidget(&$arrField, $intRow, $strKey, $varValue)
     {
         // If null replace it with an empty string.
-        if ($varValue == '' && isset($arrField['default']) && $arrField['default'] == null) {
+        if ($varValue === '' && isset($arrField['default']) && $arrField['default'] === null) {
             $arrField['default'] = '';
         }
 
@@ -119,12 +124,11 @@ window.addEventListener('DOMContentLoaded', function(e){
 });
 </script>
 SCRIPT;
-        return sprintf(
+        return \sprintf(
             $script,
-            json_encode($strId),
-            intval($maxCount),
-            intval($minCount)
+            \json_encode($strId) ?? '',
+            (int) $maxCount,
+            (int) $minCount
         );
     }
-
 }

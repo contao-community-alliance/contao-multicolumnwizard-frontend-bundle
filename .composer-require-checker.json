@@ -1,0 +1,15 @@
+{
+  "symbol-whitelist": [
+    "Contao\\ManagerBundle\\ContaoManagerBundle",
+    "Contao\\ManagerPlugin\\Bundle\\BundlePluginInterface",
+    "Contao\\ManagerPlugin\\Bundle\\Config\\BundleConfig",
+    "Contao\\ManagerPlugin\\Bundle\\Parser\\ParserInterface",
+    "Symfony\\Component\\Config\\FileLocator",
+    "Symfony\\Component\\Console\\Application",
+    "Symfony\\Component\\DependencyInjection\\ContainerBuilder",
+    "Symfony\\Component\\DependencyInjection\\Loader\\YamlFileLoader",
+    "Symfony\\Component\\HttpFoundation\\Response",
+    "Symfony\\Component\\HttpKernel\\Bundle\\Bundle",
+    "Symfony\\Component\\HttpKernel\\DependencyInjection\\ConfigurableExtension"
+  ]
+}
