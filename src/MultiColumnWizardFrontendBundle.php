@@ -24,6 +24,7 @@ namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle;
 
 use ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\DependencyInjection\MultiColumnWizardFrontendExtension;
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class MultiColumnWizardFrontendBundle extends Bundle
@@ -31,7 +32,7 @@ class MultiColumnWizardFrontendBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function getContainerExtension()
+    public function getContainerExtension(): ?ExtensionInterface
     {
         return new MultiColumnWizardFrontendExtension();
     }
