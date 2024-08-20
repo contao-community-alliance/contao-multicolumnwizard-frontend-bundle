@@ -42,8 +42,6 @@ class FormMultiColumnWizard extends MultiColumnWizard
      * Don't use parent's but parent parent's __construct
      *
      * @param array $arrAttributes
-     *
-     * @noinspection PhpMissingParentConstructorInspection
      */
     public function __construct($arrAttributes = [])
     {
@@ -53,10 +51,10 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $this->strTemplate = 'form_mcw';
 
         $GLOBALS['TL_BODY']['mcw_sortable_js'] =
-            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
+            '<script type="text/javascript" src="/bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
         $GLOBALS['TL_BODY']['mcw_fe_js']       =
             '<script type="text/javascript"
-                     src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
+                     src="/bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
     }
 
     /**
@@ -69,7 +67,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
      */
     protected function convertToResponse($str)
     {
-        return new Response(Controller::replaceOldBePaths($str));
+        return new Response($str);
     }
 
     /**
@@ -96,7 +94,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
             throw new ResponseException($this->convertToResponse($result));
         }
 
-            return parent::generate($overwriteRowCurrentRow, $onlyRows);
+        return parent::generate($overwriteRowCurrentRow, $onlyRows);
     }
 
     /**
