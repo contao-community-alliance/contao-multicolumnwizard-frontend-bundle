@@ -26,7 +26,8 @@
   },
   "require": {
     "php": "^8.2",
-    "contao/core-bundle": "^5.3 <5.7",
+    "contao-community-alliance/dc-general-contao-frontend": "^2.4",
+    "contao/core-bundle": "^5.3",
     "menatwork/contao-multicolumnwizard-bundle": "^3.6.8",
     "symfony/config": "^6.4",
     "symfony/console": "^6.4",
@@ -35,7 +36,7 @@
     "symfony/http-kernel": "^6.4"
   },
   "require-dev": {
-    "contao/manager-bundle": "^2.8",
+    "contao/manager-plugin": "^2.8",
     "phpcq/runner-bootstrap": "^1.0@dev",
     "roave/security-advisories": "dev-latest"
   },

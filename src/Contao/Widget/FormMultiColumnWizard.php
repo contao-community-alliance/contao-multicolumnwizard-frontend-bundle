@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2022-2024 Contao Community Alliance.
+ * (c) 2022-2025 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
  * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2022-2024 Contao Community Alliance.
+ * @copyright  2022-2025 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -81,6 +81,8 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $action      = Input::post('action');
         $name        = Input::post('name');
         $maxRowCount = Input::post('maxRowId');
+        assert(\is_string($maxRowCount));
+        $maxRowCount = (int) $maxRowCount;
 
         if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
