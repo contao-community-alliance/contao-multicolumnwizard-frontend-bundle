@@ -80,7 +80,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
         $action      = Input::post('action');
         $name        = Input::post('name');
-        $maxRowCount = Input::post('maxRowId');
+        $maxRowCount = Input::post('maxRowId') ?? '0';
         assert(\is_string($maxRowCount));
         $maxRowCount = (int) $maxRowCount;
 
