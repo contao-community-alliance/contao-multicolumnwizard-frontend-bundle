@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2020-2024 Contao Community Alliance.
+ * (c) 2020-2025 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
  * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2020-2024 Contao Community Alliance.
+ * @copyright  2020-2025 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -22,13 +22,13 @@
 
 namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\ContaoManager;
 
+use ContaoCommunityAlliance\DcGeneral\ContaoFrontend\CcaDcGeneralContaoFrontendBundle;
+use ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\MultiColumnWizardFrontendBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
-use Contao\ManagerBundle\ContaoManagerBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use MenAtWork\MultiColumnWizardBundle\MultiColumnWizardBundle;
-use ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\MultiColumnWizardFrontendBundle;
 
 /**
  * Class Plugin
@@ -45,8 +45,8 @@ class Plugin implements BundlePluginInterface
                 ->setLoadAfter(
                     [
                         ContaoCoreBundle::class,
-                        ContaoManagerBundle::class,
                         MultiColumnWizardBundle::class,
+                        CcaDcGeneralContaoFrontendBundle::class
                     ]
                 ),
         ];

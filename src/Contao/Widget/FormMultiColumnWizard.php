@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2022-2024 Contao Community Alliance.
+ * (c) 2022-2025 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
  * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2022-2024 Contao Community Alliance.
+ * @copyright  2022-2025 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
@@ -42,8 +42,6 @@ class FormMultiColumnWizard extends MultiColumnWizard
      * Don't use parent's but parent parent's __construct
      *
      * @param array $arrAttributes
-     *
-     * @noinspection PhpMissingParentConstructorInspection
      */
     public function __construct($arrAttributes = [])
     {
@@ -53,10 +51,10 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $this->strTemplate = 'form_mcw';
 
         $GLOBALS['TL_BODY']['mcw_sortable_js'] =
-            '<script type="text/javascript" src="bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
+            '<script type="text/javascript" src="/bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
         $GLOBALS['TL_BODY']['mcw_fe_js']       =
             '<script type="text/javascript"
-                     src="bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
+                     src="/bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
     }
 
     /**
@@ -69,7 +67,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
      */
     protected function convertToResponse($str)
     {
-        return new Response(Controller::replaceOldBePaths($str));
+        return new Response($str);
     }
 
     /**
@@ -82,7 +80,9 @@ class FormMultiColumnWizard extends MultiColumnWizard
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
         $action      = Input::post('action');
         $name        = Input::post('name');
-        $maxRowCount = Input::post('maxRowId');
+        $maxRowCount = Input::post('maxRowId') ?? '0';
+        assert(\is_string($maxRowCount));
+        $maxRowCount = (int) $maxRowCount;
 
         if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
@@ -96,7 +96,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
             throw new ResponseException($this->convertToResponse($result));
         }
 
-            return parent::generate($overwriteRowCurrentRow, $onlyRows);
+        return parent::generate($overwriteRowCurrentRow, $onlyRows);
     }
 
     /**

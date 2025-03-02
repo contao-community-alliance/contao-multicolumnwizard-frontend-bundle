@@ -37,6 +37,10 @@
     filter: saturate(0);
 }
 
+.multicolumnwizard a img.color-scheme--dark {
+  display: none;
+}
+
 .multicolumnwizard a.rotate img {
     -webkit-animation: mcw-spin .4s linear infinite;
     -moz-animation: mcw-spin .4s linear infinite;
