@@ -88,6 +88,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
 
         if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
+            /** @psalm-suppress RiskyCast */
             $newRowCount = ((int) $maxRowCount + 1);
             foreach ($this->columnFields as $strKey => $arrField) {
                 $this->varValue[$newRowCount][$strKey] = '';
