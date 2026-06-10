@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2022-2024 Contao Community Alliance.
+ * (c) 2022-2026 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,24 +12,29 @@
  *
  * @package    contao-community-alliance/contao-multicolumnwizard-frontend
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
- * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2022-2024 Contao Community Alliance.
+ * @copyright  2022-2026 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
+/**
+ * @final
+ */
 class MultiColumnWizardFrontendExtension extends Extension
 {
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getAlias(): string
     {
         return 'multicolumnwizard-frontend-bundle';
@@ -38,6 +43,7 @@ class MultiColumnWizardFrontendExtension extends Extension
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
     }

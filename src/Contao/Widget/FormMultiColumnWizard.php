@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2022-2024 Contao Community Alliance.
+ * (c) 2022-2026 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,13 +12,14 @@
  *
  * @package    contao-community-alliance/contao-multicolumnwizard-frontend
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
- * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2022-2024 Contao Community Alliance.
+ * @copyright  2022-2026 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\Contao\Widget;
 
@@ -30,6 +31,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class is used for the contao frontend view as template.
+ *
+ * @final
  *
  * @SuppressWarnings(PHPMD.Superglobals)
  *
@@ -75,6 +78,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
      *
      * @SuppressWarnings(PHPMD.LongVariable)
      */
+    #[\Override]
     public function generate($overwriteRowCurrentRow = null, $onlyRows = false)
     {
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
@@ -84,7 +88,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
 
         if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
-            $newRowCount = ($maxRowCount + 1);
+            $newRowCount = ((int) $maxRowCount + 1);
             foreach ($this->columnFields as $strKey => $arrField) {
                 $this->varValue[$newRowCount][$strKey] = '';
             }
@@ -100,6 +104,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     /**
      * @inheritdoc
      */
+    #[\Override]
     protected function initializeWidget(&$arrField, $intRow, $strKey, $varValue)
     {
         // If null replace it with an empty string.
@@ -113,6 +118,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function generateScriptBlock($strId, $maxCount, $minCount)
     {
         $script = <<<SCRIPT

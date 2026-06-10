@@ -17,6 +17,11 @@
       "name": "Richard Henkenjohann",
       "email": "richardhenkenjohann@googlemail.com",
       "role": "Developer"
+    },
+    {
+      "name": "Ingolf Steinhardt",
+      "email": "info@e-spin.de",
+      "role": "Developer"
     }
   ],
   "homepage": "https://c-c-a.org/",
@@ -25,17 +30,17 @@
     "source": "https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend"
   },
   "require": {
-    "php": "^8.2",
-    "contao/core-bundle": "^5.3 <5.7",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.6.8",
-    "symfony/config": "^6.4",
-    "symfony/console": "^6.4",
-    "symfony/dependency-injection": "^6.4",
-    "symfony/http-foundation": "^6.4",
-    "symfony/http-kernel": "^6.4"
+    "php": "^8.4",
+    "contao/core-bundle": "^5.7",
+    "menatwork/contao-multicolumnwizard-bundle": "^3.6.15",
+    "symfony/config": "^7.4",
+    "symfony/console": "^7.4",
+    "symfony/dependency-injection": "^7.4",
+    "symfony/http-foundation": "^7.4",
+    "symfony/http-kernel": "^7.4"
   },
   "require-dev": {
-    "contao/manager-bundle": "^2.8",
+    "contao/manager-plugin": "^2.8",
     "phpcq/runner-bootstrap": "^1.0@dev",
     "roave/security-advisories": "dev-latest"
   },
@@ -58,7 +63,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-feature/2.4.0": "2.4.x-dev"
+      "dev-feature/2.5.0": "2.5.x-dev"
     },
     "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin"
   }

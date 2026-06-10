@@ -3,7 +3,7 @@
 /**
  * This file is part of contao-community-alliance/contao-multicolumnwizard-frontend-bundle.
  *
- * (c) 2020-2024 Contao Community Alliance.
+ * (c) 2020-2026 Contao Community Alliance.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,13 +12,14 @@
  *
  * @package    contao-community-alliance/contao-multicolumnwizard-frontend
  * @author     Richard Henkenjohann <richardhenkenjohann@googlemail.com>
- * @author     Stefan Heimes <heimes@men-at-work.de>
  * @author     Ingolf Steinhardt <info@e-spin.de>
- * @copyright  2020-2024 Contao Community Alliance.
+ * @copyright  2020-2026 Contao Community Alliance.
  * @license    https://github.com/contao-community-alliance/contao-multicolumnwizard-frontend-bundle/blob/master/LICENSE
  *             LGPL-3.0-or-later
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle;
 
@@ -27,11 +28,17 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @final
+ *
+ * @psalm-suppress MissingConstructor
+ */
 class MultiColumnWizardFrontendBundle extends Bundle
 {
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getContainerExtension(): ?ExtensionInterface
     {
         return new MultiColumnWizardFrontendExtension();
@@ -40,6 +47,7 @@ class MultiColumnWizardFrontendBundle extends Bundle
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function registerCommands(Application $application): void
     {
         // Disable automatic command registration.
