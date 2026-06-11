@@ -23,8 +23,9 @@ declare(strict_types=1);
 
 namespace ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\ContaoManager;
 
+use ContaoCommunityAlliance\DcGeneral\ContaoFrontend\CcaDcGeneralContaoFrontendBundle;
+use ContaoCommunityAlliance\MultiColumnWizardFrontendBundle\MultiColumnWizardFrontendBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
-use Contao\ManagerBundle\ContaoManagerBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
@@ -47,8 +48,8 @@ class Plugin implements BundlePluginInterface
                 ->setLoadAfter(
                     [
                         ContaoCoreBundle::class,
-                        ContaoManagerBundle::class,
                         MultiColumnWizardBundle::class,
+                        CcaDcGeneralContaoFrontendBundle::class
                     ]
                 ),
         ];

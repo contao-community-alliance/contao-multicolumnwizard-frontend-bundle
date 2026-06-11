@@ -53,11 +53,15 @@ class FormMultiColumnWizard extends MultiColumnWizard
         $this->strPrefix   = 'widget widget-mcw';
         $this->strTemplate = 'form_mcw';
 
-        $GLOBALS['TL_BODY']['mcw_sortable_js'] =
-            '<script type="text/javascript" src="/bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>';
-        $GLOBALS['TL_BODY']['mcw_fe_js']       =
-            '<script type="text/javascript"
-                     src="/bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>';
+        $GLOBALS['TL_BODY']['mcw_sortable_js'] = \sprintf(
+            '<script%s type="text/javascript" src="/bundles/multicolumnwizardfrontend/js/Sortable.min.js"></script>',
+            $this->attrs()->setIfExists('nonce', $this->nonce('script-src'))
+        );
+        $GLOBALS['TL_BODY']['mcw_fe_js']       = \sprintf(
+            '<script%s type="text/javascript"
+                    src="/bundles/multicolumnwizardfrontend/js/multicolumnwizard_fe.min.js"></script>',
+            $this->attrs()->setIfExists('nonce', $this->nonce('script-src'))
+        );
     }
 
     /**
@@ -84,7 +88,9 @@ class FormMultiColumnWizard extends MultiColumnWizard
         // 'action=mcwCreateNewRow&name=' + fieldName + '&maxRowId=' + maxRowId;
         $action      = Input::post('action');
         $name        = Input::post('name');
-        $maxRowCount = Input::post('maxRowId');
+        $maxRowCount = Input::post('maxRowId') ?? '0';
+        assert(\is_string($maxRowCount));
+        $maxRowCount = (int) $maxRowCount;
 
         if ('mcwCreateNewRow' === $action && $name === $this->strName) {
             // Rewrite the values.
@@ -123,8 +129,7 @@ class FormMultiColumnWizard extends MultiColumnWizard
     protected function generateScriptBlock($strId, $maxCount, $minCount)
     {
         $script = <<<SCRIPT
-
-<script>
+<script{$this->attrs()->setIfExists('nonce', $this->nonce('script-src'))}>
 window.addEventListener('DOMContentLoaded', function(e){
     new MultiColmTableName({
         selector: "ctrl_" + %s,
