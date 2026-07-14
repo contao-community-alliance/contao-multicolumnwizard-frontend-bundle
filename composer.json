@@ -32,7 +32,7 @@
   "require": {
     "php": "^8.4",
     "contao/core-bundle": "^5.7",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.6.15",
+    "menatwork/contao-multicolumnwizard-bundle": "^3.7",
     "symfony/config": "^7.4",
     "symfony/console": "^7.4",
     "symfony/dependency-injection": "^7.4",
