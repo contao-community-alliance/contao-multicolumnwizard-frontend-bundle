@@ -1,0 +1,24 @@
+{#
+    Twig variant of form_mcw.html5.
+
+    Contao renders this one instead of the legacy template as soon as it exists - see
+    TemplateInheritance::renderTwigSurrogateIfExists(). The legacy file stays as the fallback for
+    setups that override it, and both must keep producing the same markup.
+
+    The stylesheet goes through the "stylesheets" block rather than $GLOBALS['TL_CSS'], which is
+    what a Twig template has instead of the global side effect of the legacy one.
+#}
+{% extends '@Contao/form_row.html.twig' %}
+
+{% block label %}
+    {# In a template that extends another one, everything has to live inside a block. #}
+    {% add 'mcw_fe_css' to stylesheets %}
+        <link rel="stylesheet" href="/bundles/multicolumnwizardfrontend/css/multicolumnwizard.min.css">
+    {% endadd %}
+
+{{ generateLabel.invoke()|raw -}}
+{% endblock %}
+
+{% block field %}
+{{ generateWithError.invoke()|raw -}}
+{% endblock %}
