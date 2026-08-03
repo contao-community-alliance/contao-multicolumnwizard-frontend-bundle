@@ -9,7 +9,14 @@
 >
     <projectFiles>
         <directory name="src"/>
-        <ignoreFiles>
+        <!--
+            "../../menatwork" only exists in the devstack, where the sibling package sits next to
+            this one. A standalone checkout - CI, for instance - has no such directory, and psalm
+            aborts while parsing its config when an ignore path cannot be resolved, so it never
+            gets as far as writing the checkstyle report. allowMissingFiles keeps the entry
+            meaningful in the devstack without breaking every other layout.
+        -->
+        <ignoreFiles allowMissingFiles="true">
             <directory name="vendor"/>
             <directory name="../../menatwork"/>
         </ignoreFiles>
