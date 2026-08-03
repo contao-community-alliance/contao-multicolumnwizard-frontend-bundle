@@ -11,14 +11,19 @@
 {% extends '@Contao/form_row.html.twig' %}
 
 {% block label %}
-    {# In a template that extends another one, everything has to live inside a block. #}
-    {% add 'mcw_fe_css' to stylesheets %}
-        <link rel="stylesheet" href="/bundles/multicolumnwizardfrontend/css/multicolumnwizard.min.css">
-    {% endadd %}
-
 {{ generateLabel.invoke()|raw -}}
 {% endblock %}
 
 {% block field %}
+    {#
+        In a template that extends another one everything has to live inside a block, and this one
+        has to be the field block rather than the label block: MetaModels' frontend editing appends
+        its translation badge by overriding the label block, which would drop the stylesheet along
+        with it.
+    #}
+    {% add 'mcw_fe_css' to stylesheets %}
+        <link rel="stylesheet" href="/bundles/multicolumnwizardfrontend/css/multicolumnwizard.min.css">
+    {% endadd %}
+
 {{ generateWithError.invoke()|raw -}}
 {% endblock %}
