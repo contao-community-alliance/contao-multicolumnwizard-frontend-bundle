@@ -63,7 +63,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-feature/2.5.0": "2.5.x-dev"
+      "dev-master": "2.5.x-dev"
     },
     "contao-manager-plugin": "ContaoCommunityAlliance\\MultiColumnWizardFrontendBundle\\ContaoManager\\Plugin"
   }
